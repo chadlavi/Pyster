@@ -82,7 +82,7 @@ def shorten():
                 [base64.urlsafe_b64encode(str.encode(url))]
             )
             encoded_string = toBase62(res.lastrowid)
-        return render_template('shorten.html', short_url=host + encoded_string)
+        return render_template('shorten.html', short_url=host + 'i/' +  encoded_string)
     return render_template('shorten.html')
 
 
@@ -90,7 +90,7 @@ def shorten():
 def static_from_root():
     return send_from_directory(app.static_folder, request.path[1:])
 
-@app.route('/<short_url>')
+@app.route('/i/<short_url>')
 def redirect_short_url(short_url):
     decoded = toBase10(short_url)
     #print('decoded = '+str(decoded))
