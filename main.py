@@ -1,4 +1,5 @@
-from flask import Flask, request, render_template, redirect
+from secrets import *
+from flask import Flask, request, render_template, redirect, send_from_directory
 from math import floor
 from sqlite3 import OperationalError
 import string
@@ -18,13 +19,7 @@ except ImportError:
 import base64
 
 # Assuming urls.db is in your app root folder
-app = Flask(__name__)
-ip='chdlv.pw'
-#ip='159.65.231.71'
-port='80'
-host = 'http://'+ip+'/'
-if port != '80':
-    host = 'http://'+ip+':'+port+'/'
+app = Flask(__name__, static_url_path='/static/')
 
 def table_check():
     create_table = """
@@ -39,7 +34,6 @@ def table_check():
             cursor.execute(create_table)
         except OperationalError:
             pass
-
 
 def toBase62(num, b=62):
     if b <= 0 or b > 62:
@@ -72,15 +66,15 @@ def home():
 def shorten():
     if request.method == 'POST':
         original_url = str_encode(request.form.get('url'))
-        print('original_url as input: '+original_url.decode())
+        #print('original_url as input: '+original_url.decode())
         parsed = urlparse(original_url)
-        print(parsed)
+        #print(parsed)
         if not parsed.scheme:
-            print('no scheme')
+            #print('no scheme')
             url = 'http://' + original_url.decode('utf-8')
         else:
             url = original_url.decode('utf-8')
-        print('url = '+url)
+        #print('url = '+url)
         with sqlite3.connect('urls.db') as conn:
             cursor = conn.cursor()
             res = cursor.execute(
@@ -92,12 +86,15 @@ def shorten():
     return render_template('shorten.html')
 
 
+@app.route('/robots.txt')
+def static_from_root():
+    return send_from_directory(app.static_folder, request.path[1:])
+
 @app.route('/<short_url>')
 def redirect_short_url(short_url):
     decoded = toBase10(short_url)
-    print('decoded = '+str(decoded))
+    #print('decoded = '+str(decoded))
     url = ''  # fallback if no URL is found
-    #url = host  # fallback if no URL is found
     with sqlite3.connect('urls.db') as conn:
         cursor = conn.cursor()
         res = cursor.execute('SELECT URL FROM WEB_URL WHERE ID=?', [decoded])
@@ -105,10 +102,10 @@ def redirect_short_url(short_url):
             short = res.fetchone()
             if short is not None:
                 url = base64.urlsafe_b64decode(short[0])
-                print('url = '+url)
+                #print('url = '+url)
         except Exception as e:
             print(e)
-    print(url)
+    #print(url)
     return redirect(url)
 
 

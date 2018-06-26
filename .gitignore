@@ -5,3 +5,5 @@ pip-selfcheck.json
 pyvenv.cfg
 *.swp
 *.db
+secrets.py
+__pycache__/*
