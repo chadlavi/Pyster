@@ -105,10 +105,10 @@ def redirect_short_url(short_url):
             short = res.fetchone()
             if short is not None:
                 url = base64.urlsafe_b64decode(short[0])
-                print('url = '+url.decode())
+                print('url = '+url)
         except Exception as e:
             print(e)
-    print(url.decode())
+    print(url)
     return redirect(url)
 
 
