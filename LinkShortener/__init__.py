@@ -1,8 +1,6 @@
-from secrets import *
 from flask import Flask, request, render_template, redirect, send_from_directory
 from math import floor
 from sqlite3 import OperationalError
-from flask_basicauth import BasicAuth
 import string
 import sqlite3
 try:
@@ -21,11 +19,6 @@ import base64
 
 # Assuming urls.db is in your app root folder
 app = Flask(__name__, static_url_path='/static/')
-
-app.config['BASIC_AUTH_USERNAME'] = username
-app.config['BASIC_AUTH_PASSWORD'] = password
-
-basic_auth = BasicAuth(app)
 
 def table_check():
     create_table = """
@@ -69,7 +62,6 @@ def home():
     return render_template('home.html')
 
 @app.route('/shorten', methods=['GET', 'POST'])
-@basic_auth.required
 def shorten():
     if request.method == 'POST':
         original_url = str_encode(request.form.get('url'))
