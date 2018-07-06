@@ -11,17 +11,22 @@
                 {% if not short_url %}
                 <div class="level-item">
                     <div>
-                        <h4>Enter URL to shorten.</h4>
-                        <form method="post" class="" action="">
-                            <div class="field has-addons">
-                                <div class="control">
-                                    <input type="text" id="url" name="url" class="input" placeholder="URL" />
+                        <div class="buttons is-right">
+                            <a href="/links" class="button is-light">see all links</a>
+                        </div>
+                        <div>
+                            <h4>Enter URL to shorten.</h4>
+                            <form method="post" class="" action="">
+                                <div class="field has-addons">
+                                    <div class="control">
+                                        <input type="text" id="url" name="url" class="input" placeholder="URL" />
+                                    </div>
+                                    <div class="control">
+                                        <button type="submit" class="button is-info">Submit</button>
+                                    </div>
                                 </div>
-                                <div class="control">
-                                    <button type="submit" class="button is-info">Submit</button>
-                                </div>
-                            </div>
-                        </form>
+                            </form>
+                        </div>
                     </div>
                 </div>
                 {% else %}

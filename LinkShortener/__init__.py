@@ -131,6 +131,9 @@ def redirect_short_url(short_url):
             print(e)
     print('url = '+url)
     return redirect(url)
+@app.errorhandler(404)
+def page_not_found(e):
+    return render_template('home.html')
 
 
 if __name__ == '__main__':

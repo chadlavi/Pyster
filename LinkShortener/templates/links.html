@@ -8,22 +8,27 @@
         <!-- Main jumbotron for a primary marketing message or call to action -->
         <div class="hero is-fullheight">
             <div class="level is-mobile is-paddingless hero-body">
-                <div class="level-item">
+                <div class="level-item section">
                     <div>
-                        <table class="table is-fullwidth">
-                            <thead>
-                                <th>short link</th>
-                                <th>original url</th>
-                            </thead>
-                            <tbody>
-                                {% for link in links %}
-                                <tr>
-                                    <td><a href="{{link.short}}">{{link.short}}</a></td>
-                                    <td>{{link.url}}</td>
-                                </tr>
-                                {% endfor %}
-                            </tbody>
-                        </table>
+                        <div class="buttons is-right">
+                            <a class="button is-info" href="/shorten">shorten a link</a>
+                        </div>
+                        <div>
+                            <table class="table is-fullwidth">
+                                <thead>
+                                    <th>short link</th>
+                                    <th>original url</th>
+                                </thead>
+                                <tbody>
+                                    {% for link in links %}
+                                    <tr>
+                                        <td><a href="{{link.short}}">{{link.short}}</a></td>
+                                        <td>{{link.url}}</td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
