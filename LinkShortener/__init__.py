@@ -47,7 +47,7 @@ def getList():
             Links = [dict(short=row[0],
                 url=row[1]) for row in links]
             for link in Links:
-                link['short'] = 'http://chdlv.pw/i/' + toBase62(link['short'])
+                link['short'] = 'http://chdlv.pw/l/' + toBase62(link['short'])
                 link['url'] = base64.urlsafe_b64decode(str(link['url']))
             return Links
         except OperationalError:
@@ -99,7 +99,7 @@ def shorten():
                 [base64.urlsafe_b64encode(url)]
             )
             encoded_string = toBase62(res.lastrowid)
-        return render_template('shorten.html', short_url=host + 'i/' +  encoded_string)
+        return render_template('shorten.html', short_url=host + 'l/' +  encoded_string)
     return render_template('shorten.html')
 
 @app.route('/links')
@@ -114,6 +114,7 @@ def static_from_root():
     return send_from_directory(app.static_folder, request.path[1:])
 
 @app.route('/i/<short_url>')
+@app.route('/l/<short_url>')
 def redirect_short_url(short_url):
     decoded = toBase10(short_url)
     print('decoded = '+str(decoded))
