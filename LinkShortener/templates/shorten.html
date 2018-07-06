@@ -8,11 +8,11 @@
         <!-- Main jumbotron for a primary marketing message or call to action -->
         <div class="hero is-fullheight">
             <div class="level is-mobile is-paddingless hero-body">
-                {% if not short_url %}
                 <div class="level-item section">
                     <div>
-                        <h1 class="title is-1 has-text-centered">🔗⚡️🔗⚡️🔗⚡️</h1>
+                        <h1 class="title is-1 has-text-centered"><a href="/">🔗⚡️🔗⚡️🔗⚡️</a></h1>
                         <div class="section">
+                            {% if not short_url %}
                             <h4>Enter URL to shorten.</h4>
                             <form method="post" class="" action="">
                                 <div class="field has-addons">
@@ -24,17 +24,17 @@
                                     </div>
                                 </div>
                             </form>
+                            {% else %}
+                            <div class="">
+                                Shortened URL:&nbsp; <a href="{{short_url}}">{{short_url}}</a>
+                            </div>
+                            {% endif %}
                         </div>
                         <div class="buttons is-centered">
                             <a href="/links" class="button is-light">see all links</a>
                         </div>
                     </div>
                 </div>
-                {% else %}
-                <div class="level-item">
-                    Shortened URL:&nbsp; <a href="{{short_url}}">{{short_url}}</a>
-                </div>
-                {% endif %}
             </div>
         </div>
     </body>
