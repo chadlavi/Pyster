@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.1/css/bulma.css" rel="stylesheet">
+    </head>
+    <body>
+        <!-- Main jumbotron for a primary marketing message or call to action -->
+        <div class="hero is-fullheight">
+            <div class="level is-mobile is-paddingless hero-body">
+                <div class="level-item">
+                    <div>
+                        <table class="table is-fullwidth">
+                            <thead>
+                                <th>short link</th>
+                                <th>original url</th>
+                            </thead>
+                            <tbody>
+                                {% for link in links %}
+                                <tr>
+                                    <td><a href="{{link.short}}">{{link.short}}</a></td>
+                                    <td>{{link.url}}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+   </html>

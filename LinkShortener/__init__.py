@@ -36,6 +36,23 @@ def table_check():
         except OperationalError:
             pass
 
+def getList():
+    get_links = """
+        select ID, URL from WEB_URL order by id desc;
+        """
+    with sqlite3.connect('/var/www/LinkShortener/LinkShortener/urls.db') as conn:
+        cursor = conn.cursor()
+        try:
+            links = cursor.execute(get_links)
+            Links = [dict(short=row[0],
+                url=row[1]) for row in links]
+            for link in Links:
+                link['short'] = 'http://chdlv.pw/i/' + toBase62(link['short'])
+                link['url'] = base64.urlsafe_b64decode(str(link['url']))
+            return Links
+        except OperationalError:
+            pass
+
 def toBase62(num, b=62):
     if b <= 0 or b > 62:
         return 0
@@ -85,6 +102,12 @@ def shorten():
         return render_template('shorten.html', short_url=host + 'i/' +  encoded_string)
     return render_template('shorten.html')
 
+@app.route('/links')
+def links():
+    if request.method == 'GET':
+        get_links = getList()
+        #get_links = dict()
+        return render_template('links.html', links=get_links)
 
 @app.route('/robots.txt')
 def static_from_root():
